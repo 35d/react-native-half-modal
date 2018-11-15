@@ -21,9 +21,9 @@ type Props = {
 type State = {
   modalPan: Animated,
   modalBgPan: Animated,
+  modalHeight: number,
 };
 
-const MODAL_HEIGHT = 300; // TODO 明示的に書かなくても良いようにする
 const MODAL_CLOSE_THRESHOLD = -40; // 閾値(40px下に動かしたら閉じる)
 const MODAL_BG_OPEN_DURATION = 50;
 const MODAL_BG_CLOSE_DURATION = 50;
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: Dimensions.get('window').height,
     width: '100%',
-    top: Dimensions.get('window').height - MODAL_HEIGHT, // 初期位置
     borderRadius: 16,
   },
   modalBackground: {
@@ -61,8 +60,9 @@ export default class SemiModal extends Component<Props, State> {
     this.state = {
       modalPan: new Animated.ValueXY(0),
       modalBgPan: new Animated.ValueXY(0),
+      modalHeight: 0,
     };
-    this.state.modalPan.setValue({ x: 0, y: MODAL_HEIGHT * 2 });
+    this.state.modalPan.setValue({ x: 0, y: Dimensions.get('window').height });
     this.state.modalBgPan.setValue({ x: 0, y: Dimensions.get('window').height });
 
     this.panResponder = PanResponder.create({
@@ -90,24 +90,29 @@ export default class SemiModal extends Component<Props, State> {
     });
   }
 
+  componentDidMount() {
+    if (this.modalRef) {
+      setTimeout(() => {
+        this.modalRef.measure((x, y, width, height) => {
+          console.log(x);
+          console.log(y);
+          console.log(height);
+          this.setState({ modalHeight: height });
+        });
+      }, 1000);
+    }
+  }
+
   componentDidUpdate(prevProps: Props) {
     if (prevProps.isVisible === false && this.props.isVisible === true) {
       this.modalOpen();
     }
+    if (prevProps.isVisible === true && this.props.isVisible === false) {
+      this.modalClose();
+    }
   }
 
   modalOpen = () => {
-    if (this.modalRef) {
-      setTimeout(() => {
-        this.modalRef.measure((x, y, dx, dy) => {
-          console.log(x);
-          console.log(y);
-          console.log(dx);
-          console.log(dy);
-        });
-      }, 2000);
-    }
-
     Animated.parallel([
       Animated.spring(this.state.modalPan, {
         toValue: { x: 0, y: 0 },
@@ -124,7 +129,7 @@ export default class SemiModal extends Component<Props, State> {
   modalClose = () => {
     Animated.parallel([
       Animated.spring(this.state.modalPan, {
-        toValue: { x: 0, y: MODAL_HEIGHT * 2 },
+        toValue: { x: 0, y: Dimensions.get('window').height },
         useNativeDriver: true,
         duration: 0,
       }),
@@ -153,6 +158,7 @@ export default class SemiModal extends Component<Props, State> {
         <Animated.View
           style={[
             styles.modal,
+            { top: Dimensions.get('window').height - this.state.modalHeight - 44 - 32 - 16 }, // TODO (navbar + padding + margin)
             { transform: this.state.modalPan.getTranslateTransform() },
             this.props.style,
           ]}
