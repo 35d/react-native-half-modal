@@ -1,7 +1,13 @@
 {
   "name": "react-native-half-modal",
   "version": "0.0.1",
-  "private": true,
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikke1925/react-native-half-modal.git"
+  },
+  "author": "nikke1925",
+  "license": "MIT",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
