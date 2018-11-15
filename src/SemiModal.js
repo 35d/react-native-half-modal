@@ -24,7 +24,7 @@ type State = {
   modalHeight: number,
 };
 
-const MODAL_CLOSE_THRESHOLD = -40; // 閾値(40px下に動かしたら閉じる)
+const MODAL_CLOSE_THRESHOLD = -40; // TODO 閾値(40px下に動かしたら閉じる)
 const MODAL_BG_OPEN_DURATION = 50;
 const MODAL_BG_CLOSE_DURATION = 50;
 
@@ -94,9 +94,6 @@ export default class SemiModal extends Component<Props, State> {
     if (this.modalRef) {
       setTimeout(() => {
         this.modalRef.measure((x, y, width, height) => {
-          console.log(x);
-          console.log(y);
-          console.log(height);
           this.setState({ modalHeight: height });
         });
       }, 1000);
