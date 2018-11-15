@@ -23,7 +23,7 @@ type State = {
   modalBgPan: Animated,
 };
 
-const MODAL_HEIGHT = 270; // TODO 明示的に書かなくても良いようにする
+const MODAL_HEIGHT = 300; // TODO 明示的に書かなくても良いようにする
 const MODAL_CLOSE_THRESHOLD = -40; // 閾値(40px下に動かしたら閉じる)
 const MODAL_BG_OPEN_DURATION = 50;
 const MODAL_BG_CLOSE_DURATION = 50;
