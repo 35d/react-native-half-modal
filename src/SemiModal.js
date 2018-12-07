@@ -67,7 +67,9 @@ export default class SemiModal extends Component<Props, State> {
 
     this.panResponder = PanResponder.create({
       onMoveShouldSetResponderCapture: () => true,
-      onMoveShouldSetPanResponderCapture: () => true,
+
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
+        gestureState.dx !== 0 && gestureState.dy !== 0,
 
       onPanResponderGrant: () => {
         this.state.modalPan.setValue({ x: 0, y: 0 });
