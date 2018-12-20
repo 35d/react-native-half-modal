@@ -14,8 +14,9 @@ import {
 type Props = {
   children: any,
   isVisible: boolean,
-  onModalClose: Function,
+  onModalClose?: Function,
   style?: Object,
+  closeThreshold?: number,
 };
 
 type State = {
@@ -24,7 +25,6 @@ type State = {
   modalHeight: number,
 };
 
-const MODAL_CLOSE_THRESHOLD = -40; // TODO 閾値(40px下に動かしたら閉じる)
 const MODAL_BG_OPEN_DURATION = 50;
 const MODAL_BG_CLOSE_DURATION = 50;
 
@@ -51,6 +51,8 @@ export default class SemiModal extends Component<Props, State> {
 
   static defaultProps = {
     style: {},
+    onModalClose: () => {},
+    closeThreshold: 40,
   };
 
   constructor(props: Props) {
@@ -83,7 +85,7 @@ export default class SemiModal extends Component<Props, State> {
       ]),
 
       onPanResponderRelease: (e, gestureState) => {
-        if (gestureState.y0 - gestureState.moveY < MODAL_CLOSE_THRESHOLD) {
+        if (gestureState.y0 - gestureState.moveY < this.props.closeThreshold) {
           this.modalClose();
         } else {
           this.modalOpen();
@@ -130,13 +132,12 @@ export default class SemiModal extends Component<Props, State> {
       Animated.spring(this.state.modalPan, {
         toValue: { x: 0, y: Dimensions.get('window').height },
         useNativeDriver: true,
-        duration: 0,
       }),
       Animated.timing(this.state.modalBgPan, {
         toValue: { x: 0, y: Dimensions.get('window').height },
         duration: MODAL_BG_CLOSE_DURATION,
         useNativeDriver: true,
-        delay: 150, // After modal animation
+        // delay: 150, // After modal animation
       }),
     ]).start(() => {
       this.props.onModalClose();

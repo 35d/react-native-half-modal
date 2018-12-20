@@ -14,12 +14,14 @@ See ```./example/App.js```
 
 # Props
 
-| Name         | Type     | Default      | Description                     |
-| ------------ | -------- | ------------ | ------------------------------- |
-| children     | node     | **REQUIRED** | The modal content               |
-| isVisible    | bool     | **REQUIRED** | Show the modal?                 |
-| onModalClose | Function | () => {}     | Called when the modal is hidden |
-| style        | Object   | {}           | Style applied to the modal      |
+| Name           | Type     | Default      | Description                     |
+| -------------- | -------- | ------------ | ------------------------------- |
+| children       | node     | **REQUIRED** | The modal content               |
+| isVisible      | bool     | **REQUIRED** | Show the modal?                 |
+| closeThreshold | number   | 40           | Close pan threshold             |
+| onModalClose   | Function | () => {}     | Called when the modal is hidden |
+| style          | Object   | {}           | Style applied to the modal      |
+| style          | Object   | {}           | Style applied to the modal      |
 
 # Todo
 
@@ -27,7 +29,7 @@ See ```./example/App.js```
 - [ ] Write Readme
   - [x] Props list
   - [ ] Example
-- [ ] Add threshold props
+- [x] Add threshold props
 
 # Licence
 
