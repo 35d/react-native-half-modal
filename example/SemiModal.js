@@ -14,7 +14,7 @@ import {
 type Props = {
   children: any,
   isVisible: boolean,
-  onModalClose?: Function,
+  onModalClose: Function,
   style?: Object,
   closeThreshold?: number,
 };
@@ -51,7 +51,6 @@ export default class SemiModal extends Component<Props, State> {
 
   static defaultProps = {
     style: {},
-    onModalClose: () => {},
     closeThreshold: 40,
   };
 
@@ -86,9 +85,9 @@ export default class SemiModal extends Component<Props, State> {
 
       onPanResponderRelease: (e, gestureState) => {
         if (gestureState.y0 - gestureState.moveY < this.props.closeThreshold) {
-          this.modalClose();
+          this.props.onModalClose();
         } else {
-          this.modalOpen();
+          this.modalOpenAnimation();
         }
       },
     });
@@ -106,14 +105,14 @@ export default class SemiModal extends Component<Props, State> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.isVisible === false && this.props.isVisible === true) {
-      this.modalOpen();
+      this.modalOpenAnimation();
     }
     if (prevProps.isVisible === true && this.props.isVisible === false) {
-      this.modalClose();
+      this.modalCloseAnimation();
     }
   }
 
-  modalOpen = () => {
+  modalOpenAnimation = () => {
     Animated.parallel([
       Animated.spring(this.state.modalPan, {
         toValue: { x: 0, y: 0 },
@@ -127,7 +126,7 @@ export default class SemiModal extends Component<Props, State> {
     ]).start();
   };
 
-  modalClose = () => {
+  modalCloseAnimation = () => {
     Animated.parallel([
       Animated.spring(this.state.modalPan, {
         toValue: { x: 0, y: Dimensions.get('window').height },
@@ -137,11 +136,9 @@ export default class SemiModal extends Component<Props, State> {
         toValue: { x: 0, y: Dimensions.get('window').height },
         duration: MODAL_BG_CLOSE_DURATION,
         useNativeDriver: true,
-        // delay: 150, // After modal animation
+        delay: 150,
       }),
-    ]).start(() => {
-      this.props.onModalClose();
-    });
+    ]).start(() => {});
   };
 
   render() {
@@ -152,7 +149,7 @@ export default class SemiModal extends Component<Props, State> {
           { transform: this.state.modalBgPan.getTranslateTransform() },
         ]}
       >
-        <TouchableWithoutFeedback onPress={() => this.modalClose()}>
+        <TouchableWithoutFeedback onPress={() => this.props.onModalClose()}>
           <View style={{ height: '100%' }} />
         </TouchableWithoutFeedback>
         <Animated.View
