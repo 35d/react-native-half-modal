@@ -2,19 +2,25 @@
 
 ![react-native-half-modal](https://github.com/nikke1925/react-native-half-modal/blob/master/half-modal.gif)
 
+⚠️ This library is in development
+
 # Usage
-__1. Install__  
+
+**1. Install**  
 This library is available on npm.
+
 ```
 npm install --save react-native-half-modal
 ```
 
-__2. Import react-native-half-modal__
+**2. Import react-native-half-modal**
+
 ```
 import { SemiModal } from 'react-native-half-modal';
 ```
 
-__3. Create a half-modal and nest its content inside of it__
+**3. Create a half-modal and nest its content inside of it**
+
 ```
 <SemiModal>
   <View style={{ flex: 1 }}>
@@ -23,7 +29,8 @@ __3. Create a half-modal and nest its content inside of it__
 </SemiModal>
 ```
 
-__4. add required props (isVisible and onModalClose)__
+**4. add required props (isVisible and onModalClose)**
+
 ```
 <SemiModal
   isVisible={this.state.isVisible}
@@ -41,16 +48,16 @@ For a more complex example take a look at the `./example/App.js`
 
 # Props
 
-| Name           | Type     | Default      | Description                                                     |
-| -------------- | -------- | ------------ | --------------------------------------------------------------- |
-| children       | node     | **REQUIRED** | The modal content                                               |
-| isVisible      | bool     | **REQUIRED** | Show the modal?                                                 |
-| onModalClose   | Function | **REQUIRED** | Called when the modal is hidden (usually isVisible flag change) |
-| onModalHide    | Function | () => null   | Called when the modal is completely hidden                      |
-| onModalShow    | Function | () => null   | Called when the modal is completely visible                     |
-| closeThreshold | number   | 40           | Close pan threshold                                             |
-| style          | Object   | {}           | Style applied to the modal                                      |
-| style          | Object   | {}           | Style applied to the modal                                      |
+| Name            | Type     | Default      | Description                                                     |
+| --------------- | -------- | ------------ | --------------------------------------------------------------- |
+| children        | node     | **REQUIRED** | The modal content                                               |
+| isVisible       | bool     | **REQUIRED** | Show the modal?                                                 |
+| onModalClose    | Function | **REQUIRED** | Called when the modal is hidden (usually isVisible flag change) |
+| onModalHide     | Function | () => null   | Called when the modal is completely hidden                      |
+| onModalShow     | Function | () => null   | Called when the modal is completely visible                     |
+| closeThreshold  | number   | 40           | Close pan threshold                                             |
+| style           | Object   | {}           | Style applied to the modal                                      |
+| backgroundColor | String   | '#00000000'  | Style applied to the modal background                           |
 
 # Todo
 
