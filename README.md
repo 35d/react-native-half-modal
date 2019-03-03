@@ -1,8 +1,8 @@
+⚠️ This library is in development
+
 # react-native-half-modal
 
 ![react-native-half-modal](https://github.com/nikke1925/react-native-half-modal/blob/master/half-modal.gif)
-
-⚠️ This library is in development
 
 # Usage
 
