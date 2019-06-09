@@ -61,6 +61,7 @@ For a more complex example take a look at the `./example/App.js`
 
 # Todo
 
+- [ ] Android Support
 - [x] Create Example App
 - [x] Write Readme
   - [x] Props list
