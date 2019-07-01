@@ -7,37 +7,37 @@ import SemiModal from './SemiModal';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#151F2B',
+    backgroundColor: '#151F2B'
   },
   modalText: {
-    color: '#FFF',
+    color: '#FFF'
   },
   modalCancelButton: {
     borderRadius: 32,
     height: 40,
     backgroundColor: '#243347',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   bar: {
     width: 16,
     borderBottomWidth: 4,
-    borderColor: '#FFFFFF44',
+    borderColor: '#FFFFFF44'
   },
   leftBar: {
     borderRadius: 16,
     borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
+    borderBottomRightRadius: 0
   },
   rightBar: {
     borderRadius: 16,
     borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
+    borderBottomLeftRadius: 0
+  }
 });
 
 type State = {
-  isVisible: boolean,
+  isVisible: boolean
 };
 type Props = {};
 
@@ -45,7 +45,7 @@ export default class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isVisible: false,
+      isVisible: false
     };
   }
 
@@ -77,7 +77,7 @@ export default class App extends Component<Props, State> {
             paddingVertical: 24,
             paddingHorizontal: 24,
             paddingTop: 8,
-            backgroundColor: '#151F2B',
+            backgroundColor: '#151F2B'
           }}
         >
           <View>
@@ -86,7 +86,7 @@ export default class App extends Component<Props, State> {
                 flex: 1,
                 flexDirection: 'row',
                 marginBottom: 24,
-                justifyContent: 'center',
+                justifyContent: 'center'
               }}
             >
               <View style={[styles.bar, styles.leftBar]} />
