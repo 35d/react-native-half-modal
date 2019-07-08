@@ -1,5 +1,3 @@
-⚠️ This library is in development
-
 # react-native-half-modal
 
 ![react-native-half-modal](https://github.com/nikke1925/react-native-half-modal/blob/master/half-modal.gif)
@@ -61,7 +59,7 @@ For a more complex example take a look at the `./example/App.js`
 
 # Todo
 
-- [ ] Android Support
+- [x] Android Support
 - [x] Create Example App
 - [x] Write Readme
   - [x] Props list
