@@ -1,23 +1,21 @@
 {
-  "name": "example",
-  "version": "0.0.1",
-  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
   },
   "dependencies": {
-    "react": "16.8.6",
-    "react-native": "0.59.9",
-    "react-native-half-modal": "^0.2.1"
+    "expo": "^33.0.0",
+    "react": "16.8.3",
+    "react-dom": "^16.8.6",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-web": "^0.11.4"
   },
   "devDependencies": {
-    "babel-jest": "24.8.0",
-    "jest": "24.8.0",
-    "metro-react-native-babel-preset": "0.54.1",
-    "react-test-renderer": "16.8.6"
+    "babel-preset-expo": "^5.1.1"
   },
-  "jest": {
-    "preset": "react-native"
-  }
+  "private": true
 }

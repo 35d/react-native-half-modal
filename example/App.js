@@ -6,46 +6,62 @@ import SemiModal from './SemiModal';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#151F2B',
+    flex: 1
+  },
+  open: {
+    textAlign: 'center',
+    marginTop: 64
   },
   modalText: {
-    color: '#FFF',
+    color: '#FFF'
   },
   modalCancelButton: {
     borderRadius: 32,
     height: 40,
     backgroundColor: '#243347',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   bar: {
     width: 16,
     borderBottomWidth: 4,
-    borderColor: '#FFFFFF44',
+    borderColor: '#FFFFFF44'
   },
   leftBar: {
     borderRadius: 16,
     borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
+    borderBottomRightRadius: 0
   },
   rightBar: {
     borderRadius: 16,
     borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
+    borderBottomLeftRadius: 0
   },
+  SemiModal: {
+    paddingVertical: 24,
+    paddingHorizontal: 24,
+    paddingTop: 8,
+    backgroundColor: '#151F2B'
+  },
+  modalInner: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 24,
+    justifyContent: 'center'
+  }
 });
 
 type State = {
-  isVisible: boolean,
+  isVisible: boolean
 };
+
 type Props = {};
 
 export default class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isVisible: false,
+      isVisible: false
     };
   }
 
@@ -61,34 +77,13 @@ export default class App extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <View style={{ paddingVertical: 32 }}>
-          <Text
-            style={{ color: '#FFF', textAlign: 'center', marginTop: 64 }}
-            onPress={() => {
-              this.modalOpen();
-            }}
-          >
+          <Text style={styles.open} onPress={this.modalOpen}>
             OPEN
           </Text>
         </View>
-        <SemiModal
-          isVisible={this.state.isVisible}
-          onModalClose={() => this.modalClose()}
-          style={{
-            paddingVertical: 24,
-            paddingHorizontal: 24,
-            paddingTop: 8,
-            backgroundColor: '#151F2B',
-          }}
-        >
+        <SemiModal isVisible={this.state.isVisible} onModalClose={this.modalClose} style={styles.SemiModal}>
           <View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                marginBottom: 24,
-                justifyContent: 'center',
-              }}
-            >
+            <View style={styles.modalInner}>
               <View style={[styles.bar, styles.leftBar]} />
               <View style={[styles.bar, styles.rightBar]} />
             </View>
@@ -98,12 +93,7 @@ export default class App extends Component<Props, State> {
               <Text style={[styles.modalText, { marginBottom: 16 }]}>Block</Text>
               <Text style={[styles.modalText, { marginBottom: 16 }]}>Report</Text>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                this.modalClose();
-              }}
-              style={styles.modalCancelArea}
-            >
+            <TouchableOpacity onPress={this.modalClose} style={styles.modalCancelArea}>
               <View style={styles.modalCancelButton}>
                 <Text style={[styles.modalText]}>Cancel</Text>
               </View>

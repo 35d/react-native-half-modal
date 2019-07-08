@@ -152,15 +152,22 @@ export default class SemiModal extends Component<Props, State> {
           styles.modalBackground,
           { transform: this.state.modalBgPan.getTranslateTransform() },
           { backgroundColor: this.props.backgroundColor },
+          { justifyContent: 'flex-end' },
         ]}
       >
-        <TouchableWithoutFeedback onPress={() => this.props.onModalClose()}>
+        <TouchableWithoutFeedback
+          style={[
+            styles.modalBackground,
+            { transform: this.state.modalBgPan.getTranslateTransform() },
+            { backgroundColor: this.props.backgroundColor },
+          ]}
+          onPress={() => this.props.onModalClose()}
+        >
           <View style={{ height: Dimensions.get('window').height }} />
         </TouchableWithoutFeedback>
         <Animated.View
           style={[
             styles.modal,
-            { bottom: this.state.modalHeight },
             { transform: this.state.modalPan.getTranslateTransform() },
             this.props.style,
           ]}
