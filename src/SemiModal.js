@@ -1,15 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import {
-  YellowBox,
-  PanResponder,
-  View,
-  TouchableWithoutFeedback,
-  Animated,
-  Dimensions,
-  StyleSheet,
-} from 'react-native';
+import { YellowBox, PanResponder, View, TouchableWithoutFeedback, Animated, Dimensions, StyleSheet } from 'react-native';
 
 type Props = {
   children: any,
@@ -18,17 +10,18 @@ type Props = {
   style: Object,
   closeThreshold: number,
   backgroundColor: string,
+  disableTopScroll?: boolean
 };
 
 type State = {
   modalPan: Animated,
   modalBgPan: Animated,
-  modalHeight: number,
+  modalHeight: number
 };
 
 type GestureState = {
   y0: number,
-  moveY: number,
+  moveY: number
 };
 
 const MODAL_BG_OPEN_DURATION = 50;
@@ -37,15 +30,15 @@ const MODAL_BG_CLOSE_DURATION = 50;
 const styles = StyleSheet.create({
   modal: {
     width: '100%',
-    borderRadius: 16,
+    borderRadius: 16
   },
   modalBackground: {
     position: 'absolute',
     top: 0,
     left: 0,
     height: '100%',
-    width: '100%',
-  },
+    width: '100%'
+  }
 });
 
 export default class SemiModal extends Component<Props, State> {
@@ -56,6 +49,7 @@ export default class SemiModal extends Component<Props, State> {
     style: {},
     closeThreshold: 40,
     backgroundColor: '#00000000',
+    disableTopScroll: false
   };
 
   constructor(props: Props) {
@@ -65,27 +59,30 @@ export default class SemiModal extends Component<Props, State> {
     this.state = {
       modalPan: new Animated.ValueXY(0),
       modalBgPan: new Animated.ValueXY(0),
-      modalHeight: 0,
+      modalHeight: 0
     };
     this.state.modalPan.setValue({ x: 0, y: Dimensions.get('window').height });
     this.state.modalBgPan.setValue({ x: 0, y: Dimensions.get('window').height });
 
     this.panResponder = PanResponder.create({
-      onMoveShouldSetResponderCapture: () => true,
+      onMoveShouldSetResponderCapture: () => {
+        return true;
+      },
 
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
-        gestureState.dx !== 0 && gestureState.dy !== 0,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+        return gestureState.dy !== 0;
+      },
 
-      onPanResponderGrant: () => {
+      onPanResponderGrant: (e, gestureState) => {
         this.state.modalPan.setValue({ x: 0, y: 0 });
       },
 
-      onPanResponderMove: Animated.event([
-        null,
-        {
-          dy: this.state.modalPan.y,
-        },
-      ]),
+      onPanResponderMove: (e, gestureState: GestureState) => {
+        if (gestureState.dy < 0 && this.props.disableTopScroll) {
+          return;
+        }
+        this.state.modalPan.setValue({ y: gestureState.dy });
+      },
 
       onPanResponderRelease: (e, gestureState: GestureState) => {
         if (gestureState.moveY - gestureState.y0 > this.props.closeThreshold) {
@@ -93,7 +90,7 @@ export default class SemiModal extends Component<Props, State> {
         } else {
           this.modalOpenAnimation();
         }
-      },
+      }
     });
   }
 
@@ -120,13 +117,13 @@ export default class SemiModal extends Component<Props, State> {
     Animated.parallel([
       Animated.spring(this.state.modalPan, {
         toValue: { x: 0, y: 0 },
-        useNativeDriver: true,
+        useNativeDriver: true
       }),
       Animated.timing(this.state.modalBgPan, {
         toValue: { x: 0, y: 0 },
         duration: MODAL_BG_OPEN_DURATION,
-        useNativeDriver: true,
-      }),
+        useNativeDriver: true
+      })
     ]).start();
   };
 
@@ -134,45 +131,24 @@ export default class SemiModal extends Component<Props, State> {
     Animated.parallel([
       Animated.spring(this.state.modalPan, {
         toValue: { x: 0, y: Dimensions.get('window').height },
-        useNativeDriver: true,
+        useNativeDriver: true
       }),
       Animated.timing(this.state.modalBgPan, {
         toValue: { x: 0, y: Dimensions.get('window').height },
         duration: MODAL_BG_CLOSE_DURATION,
         useNativeDriver: true,
-        delay: 150,
-      }),
+        delay: 150
+      })
     ]).start(() => {});
   };
 
   render() {
     return (
-      <Animated.View
-        style={[
-          styles.modalBackground,
-          { transform: this.state.modalBgPan.getTranslateTransform() },
-          { backgroundColor: this.props.backgroundColor },
-          { justifyContent: 'flex-end' },
-        ]}
-      >
-        <TouchableWithoutFeedback
-          style={[
-            styles.modalBackground,
-            { transform: this.state.modalBgPan.getTranslateTransform() },
-            { backgroundColor: this.props.backgroundColor },
-          ]}
-          onPress={() => this.props.onModalClose()}
-        >
+      <Animated.View style={[styles.modalBackground, { transform: this.state.modalBgPan.getTranslateTransform() }, { backgroundColor: this.props.backgroundColor }, { justifyContent: 'flex-end' }]}>
+        <TouchableWithoutFeedback style={[styles.modalBackground, { transform: this.state.modalBgPan.getTranslateTransform() }, { backgroundColor: this.props.backgroundColor }]} onPress={() => this.props.onModalClose()}>
           <View style={{ height: Dimensions.get('window').height }} />
         </TouchableWithoutFeedback>
-        <Animated.View
-          style={[
-            styles.modal,
-            { transform: this.state.modalPan.getTranslateTransform() },
-            this.props.style,
-          ]}
-          {...this.panResponder.panHandlers}
-        >
+        <Animated.View style={[styles.modal, { transform: this.state.modalPan.getTranslateTransform() }, this.props.style]} {...this.panResponder.panHandlers}>
           <View
             ref={refs => {
               this.modalRef = refs;
