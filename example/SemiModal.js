@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { YellowBox, PanResponder, View, TouchableWithoutFeedback, Animated, Dimensions, StyleSheet } from 'react-native';
+import { YellowBox, PanResponder, View, TouchableWithoutFeedback, Animated, Dimensions, StyleSheet, Platform } from 'react-native';
 
 type Props = {
   children: any,
@@ -81,7 +81,10 @@ export default class SemiModal extends Component<Props, State> {
         if (gestureState.dy < 0 && this.props.disableTopScroll) {
           return;
         }
-        this.state.modalPan.setValue({ y: gestureState.dy });
+        // TODO(35d): android scroll
+        if (Platform.OS === 'ios') {
+          this.state.modalPan.setValue({ y: gestureState.dy });
+        }
       },
 
       onPanResponderRelease: (e, gestureState: GestureState) => {
